@@ -1,49 +1,18 @@
 
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
-require('dotenv').config();
+const bodyParser = require('body-parser')
+const user = require('./router') // Imports routes for the products
 
-var options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  };
+app.use('/', user)
+// parse various different custom JSON types as JSON
+app.use(bodyParser.json({ type: 'application/*+json' }))
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@pinlytest1-u7gsk.gcp.mongodb.net/test?retryWrites=true&w=majority`;
+// parse some custom thing into a Buffer
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 
-app.get('/hello/:message', (req, res) => {
-    const { params } = req
-  
-    res.json({
-      message: 'Ahoy!',
-      params
-    })
-})
-
-app.get('/graph_data/:uid', (req, res) => {
-    const { params } = req
-
-    mongoose.connect(uri, options, function(err, db) {
-        if (err) throw err;
-        db.collection(`${process.env.DB_DATABASE}`).findOne({}, function(err, result) {
-          if (err) throw err;
-          res.json({
-            message: 'Success',
-            result
-          })
-          db.close();
-        })
-      })
-})
-
-app.get('/hello/:message', (req, res) => {
-    const { params } = req
-  
-    res.json({
-      message: 'Ahoy!',
-      params
-    })
-})
+// parse an HTML body into a string
+app.use(bodyParser.text({ type: 'text/html' }))
 
 app.listen(5000, () => {
   console.log('Start server at port 5000.')
