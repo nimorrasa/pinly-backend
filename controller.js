@@ -79,8 +79,18 @@ exports.user_update = async function (req, res) {
         const update = { Pi_Mac: req.query.mac_address };
 
         let doc = await UserModel.findOne(filter);
-        await UserModel.updateOne(filter, update);
-        
+
+        if(doc == null) {
+            var person = new UserModel({
+                Pi_Mac : req.query.mac_address,
+                uid : req.query.uid,
+                end : ","
+            })
+            const result = await person.save()
+        }else{
+            await UserModel.updateOne(filter, update);
+        }
+
         res.json({
             message: 'success',
             doc
