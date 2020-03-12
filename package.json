@@ -7,6 +7,11 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nimorrasa/pinly-backend.git",
+    "private": true
+  },  
   "keywords": [],
   "author": "",
   "license": "ISC",
