@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node-api:
+    image: sample-express-app
+    build: .
+    networks:
+      - backend
+    ports:
+      - "5000:5000"
+
+networks:
+  backend:
+    driver: bridge
