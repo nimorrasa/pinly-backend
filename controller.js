@@ -36,6 +36,12 @@ const UserModel = mongoose.model("test_users", {
     end: String
 }); 
 
+exports.healthcheck = function (req, res) {
+    res.json({
+        message : "Success"
+    })
+}
+
 exports.user_create = async function (req, res) {
     const filter = { uid: req.query.uid };
 
