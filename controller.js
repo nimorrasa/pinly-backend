@@ -110,12 +110,8 @@ exports.user_update = async function (req, res) {
 exports.user_detail = async function (req, res) {
 
     try{
-        // const filter = { uid: req.query.uid };
-        const filter = { Pi_Mac: req.query.mac_address };
-
-
-        console.log(filter);
-        let doc = await sleep_model.findOne(filter);
+        const filter = { uid: req.query.uid };
+        let doc = await user_model.findOne(filter);
         res.json({
             message: 'success',
             doc

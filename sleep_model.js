@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model('test', mongoose.Schema({
+module.exports = mongoose.model('tests', mongoose.Schema({
     Time_Hr: String,
     Pi_Mac: String,
     Time_Min: String,
@@ -15,4 +15,4 @@ module.exports = mongoose.model('test', mongoose.Schema({
     Recent_WakeUp_Time : Number,
     Sleep_Score_Today : Number,
     Sleep_Score_Weekly : Number
-}),'test');
+}),'tests');
