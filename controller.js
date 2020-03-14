@@ -18,10 +18,25 @@ const options = {
   mongoose.connect(uri, options);
 
 
+  var testSchema = new mongoose.Schema({
+    Time_Hr: String,
+    Pi_Mac: String,
+    Time_Min: String,
+    Temp: Number,
+    Year: Number,
+    Date: Number,
+    Heart_Rate: Number,
+    Mic : Number,
+    Month: Number
+  });
+  
+  
+var TestTable = mongoose.model('test', testSchema, 'test');
+
 exports.sleep_detail = function (req, res) {
     const { params } = req
 
-    mongoose.collection('test').findOne({Pi_mac : params.mac_address}, function(err, result) {
+    TestTable.find({Pi_Mac: req.query.mac_address}, function(err, result) {
         if (err) throw err;
         res.json({
           message: 'Success',
