@@ -19,19 +19,15 @@ mongoose.connect(uri, options);
 const sleep_model = require('./sleep_model');
 const user_model = require('./user_model');
 
-
 exports.sleep_detail = async function (req, res) {
-    const { params } = req
+    const { params } = req;
     const filter = { Pi_Mac: req.query.mac_address };
-    // const update = { Pi_Mac: req.query.mac_address };
-
     try{
         let doc = await sleep_model.findOne(filter);
-
         res.json({
             message: 'success',
             doc
-        })
+        });
     }catch(err) {
         res.json({
             message: 'error',
