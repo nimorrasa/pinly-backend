@@ -17,4 +17,6 @@ router.get('/user_update', user_controler.user_update);
 
 router.get('/sleep_log',user_controler.sleep_log);
 router.get('/sleep_log_weekly',user_controler.sleep_log_weekly);
+
+router.get('/sleep_score_weekly',user_controler.sleep_score_weekly);
 module.exports = router;

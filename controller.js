@@ -160,15 +160,59 @@ exports.sleep_log = async function (req, res) {
 
 exports.sleep_log_weekly = async function (req, res) {
     var date_start = new Date();
-    date_start.setHours(00,000,00)
+    date_start.setHours(00,00,00)
     date_start.setDate(date_start.getDate() - 7)
     var date_end = new Date();
-    date_end.setHours(00,000,00);
-    date_end.setDate(date_end.getDate() + 1)
+    date_end.setHours(23,59,59);
+    date_end.setDate(date_end.getDate())
     
     try{
         const filter = { Pi_Mac: req.query.mac_address, Timestamp: { $gte: date_start, $lte: date_end} };
         let doc = await sleep_log_model.find(filter);
+        res.json({
+            message: 'success',
+            doc
+        })
+    }catch(err) {
+        res.json({
+            message: 'error',
+            err
+        })
+    }
+
+}
+
+
+exports.sleep_score_weekly = async function (req, res) {
+    var date_start = new Date();
+    date_start.setHours(00,00,00)
+    date_start.setDate(date_start.getDate() - 7)
+    const start_date = date_start.getDate();
+    const start_month = date_start.getMonth();
+    const start_year = date_start.getFullYear();
+    
+    var date_end = new Date();
+    date_end.setHours(23,59,59);
+    date_end.setDate(date_end.getDate())
+    const end_date = date_end.getDate();
+    const end_month = date_end.getMonth();
+
+    try{
+        const filter = { 
+            Pi_Mac: req.query.mac_address,
+            Year: {
+                $gte: start_year,
+            },
+            Date: {
+                $gte: start_date,
+                $lte: end_date
+            },
+            Month: {
+                $gte: start_month,
+                $lte: end_month
+            },
+        };
+        let doc = await hardware_model.find(filter);
         res.json({
             message: 'success',
             doc
