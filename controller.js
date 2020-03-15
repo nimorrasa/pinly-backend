@@ -216,14 +216,14 @@ exports.sleep_score_weekly = async function (req, res) {
     date_start.setHours(00,00,00)
     date_start.setDate(date_start.getDate() - 7)
     const start_date = date_start.getDate();
-    const start_month = date_start.getMonth();
+    const start_month = date_start.getMonth() + 1;
     const start_year = date_start.getFullYear();
     
     var date_end = new Date();
     date_end.setHours(23,59,59);
     date_end.setDate(date_end.getDate())
     const end_date = date_end.getDate();
-    const end_month = date_end.getMonth();
+    const end_month = date_end.getMonth() + 1;
 
     try{
         const filter = { 
@@ -240,6 +240,8 @@ exports.sleep_score_weekly = async function (req, res) {
                 $lte: end_month
             },
         };
+
+        console.log(filter);
         let doc = await hardware_model.find(filter);
         res.json({
             message: 'success',
