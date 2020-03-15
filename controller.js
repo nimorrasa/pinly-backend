@@ -225,3 +225,29 @@ exports.sleep_score_weekly = async function (req, res) {
     }
 
 }
+
+exports.mic_summary = async function (req, res) {
+    let date_string = req.query.date;
+    let date_data = date_string.split("-");
+
+    try{
+        const filter = { 
+            Pi_Mac: req.query.mac_address,
+            Year: parseInt(date_data[0]),
+            Date: parseInt(date_data[2]),
+            Month: parseInt(date_data[1]),
+        };
+
+        let doc = await mic_model.find(filter);
+        res.json({
+            message: 'success',
+            doc
+        })
+    }catch(err) {
+        res.json({
+            message: 'error',
+            err
+        })
+    }
+
+}

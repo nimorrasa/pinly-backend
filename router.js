@@ -19,4 +19,7 @@ router.get('/sleep_log',user_controler.sleep_log);
 router.get('/sleep_log_weekly',user_controler.sleep_log_weekly);
 
 router.get('/sleep_score_weekly',user_controler.sleep_score_weekly);
+
+router.get('/mic_summary',user_controler.mic_summary);
+
 module.exports = router;

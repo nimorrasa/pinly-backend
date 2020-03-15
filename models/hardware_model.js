@@ -10,6 +10,5 @@ module.exports = mongoose.model('Hardwares', mongoose.Schema({
     Heart_Rate: Number,
     Mic : Number,
     Month: Number,
-    Sleep_Score_Today : Number,
-    Hour_num : Number,
+    Sleep_Score_Today : Number
 }),'Hardwares');
