@@ -21,9 +21,37 @@ const mic_model = require('./models/mic_model');
 const user_model = require('./models/user_model');
 const sleep_log_model = require('./models/log_model');
 
+exports.sleep_list = async function (req, res) {
+    const { params } = req;
+    let filter = { Pi_Mac: req.query.mac_address };
+
+    try{
+        let doc = await hardware_model.find(filter);
+        res.json({
+            message: 'success',
+            doc
+        });
+    }catch(err) {
+        res.json({
+            message: 'error',
+            err
+        })
+    }
+
+
+}
+
 exports.sleep_detail = async function (req, res) {
     const { params } = req;
-    const filter = { Pi_Mac: req.query.mac_address };
+    let filter = { Pi_Mac: req.query.mac_address };
+    if(req.query.date){
+        let date_string = req.query.date;
+        let date_data = date_string.split("-");
+    
+        filter.Date = date_data[2];
+        filter.Month = date_data[1];
+        filter.Year = date_data[0];
+    }
     try{
         let doc = await hardware_model.findOne(filter);
         res.json({

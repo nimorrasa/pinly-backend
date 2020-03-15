@@ -8,6 +8,7 @@ const user_controler = require('./controller');
 router.get('/healthcheck', user_controler.healthcheck);
 
 //Get Value from Hardware
+router.get('/sleep_list', user_controler.sleep_list);
 router.get('/sleep_detail', user_controler.sleep_detail);
 
 //Create user with Mac Address
