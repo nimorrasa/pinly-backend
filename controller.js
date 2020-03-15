@@ -18,6 +18,7 @@ mongoose.connect(uri, options);
 
 const sleep_model = require('./sleep_model');
 const user_model = require('./user_model');
+const sleep_log_model = require('./sleep_log_model');
 
 exports.sleep_detail = async function (req, res) {
     const { params } = req;
@@ -106,7 +107,6 @@ exports.user_update = async function (req, res) {
 
 };
 
-
 exports.user_detail = async function (req, res) {
 
     try{
@@ -124,3 +124,52 @@ exports.user_detail = async function (req, res) {
     }
 
 };
+
+
+exports.sleep_log = async function (req, res) {
+
+    const timestamp = new Date(req.query.timestamp);
+    console.log(timestamp);
+    const time_hr = timestamp.getHours();
+    const time_min = timestamp.getMinutes();
+    const pi_mac = req.query.mac_address;
+    const uid = req.query.uid;
+    const sleep_status =req.query.status;
+
+    try{
+        const log_data = new sleep_log_model({
+            Pi_Mac: pi_mac,
+            uid: uid,
+            Time_Hr: time_hr,
+            Time_Min: time_min,
+            Sleep_Status: sleep_status,
+            Timestamp : timestamp
+        });
+        await log_data.save();
+        res.json({
+            message: 'success'
+        })
+    }catch(err) {
+        res.json({
+            message: 'error',
+            err
+        })
+    }
+}
+
+exports.sleep_log_weekly = async function (req, res) {
+    try{
+        const filter = { Pi_Mac: req.query.mac_address };
+        let doc = await sleep_log_model.find(filter);
+        res.json({
+            message: 'success',
+            doc
+        })
+    }catch(err) {
+        res.json({
+            message: 'error',
+            err
+        })
+    }
+
+}
