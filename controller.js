@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@pinlytest1-u7gsk.gcp.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@pinlytest1-u7gsk.gcp.mongodb.net/Test_Stable?retryWrites=true&w=majority`;
 
 const options = {
     useNewUrlParser: true,
@@ -16,15 +16,16 @@ const options = {
 };
 mongoose.connect(uri, options);
 
-const sleep_model = require('./sleep_model');
-const user_model = require('./user_model');
-const sleep_log_model = require('./sleep_log_model');
+const hardware_model = require('./models/hardware_model');
+const mic_model = require('./models/mic_model');
+const user_model = require('./models/user_model');
+const sleep_log_model = require('./models/log_model');
 
 exports.sleep_detail = async function (req, res) {
     const { params } = req;
     const filter = { Pi_Mac: req.query.mac_address };
     try{
-        let doc = await sleep_model.findOne(filter);
+        let doc = await hardware_model.findOne(filter);
         res.json({
             message: 'success',
             doc
